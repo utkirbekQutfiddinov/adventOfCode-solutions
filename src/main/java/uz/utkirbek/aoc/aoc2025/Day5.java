@@ -77,24 +77,25 @@ public class Day5 {
 
         long result = 0;
         int id = 0;
-        long from = 0, to = 0, maxx = 0l;
+        long from = 0, to = 0;
 
         List<long[]> intervals = new ArrayList<>();
 
-        // Parse input into intervals
-        for (String range : rows) {
-            String[] parts = range.split("-");
-            long start = Long.parseLong(parts[0]);
-            long end = Long.parseLong(parts[1]);
-            if (start <= end) {
-                intervals.add(new long[]{start, end});
+
+        for (int i=0; i < rows.size(); i++) {
+            row = rows.get(i);
+            String[] parts = row.split("-");
+            from = Long.parseLong(parts[0]);
+            to = Long.parseLong(parts[1]);
+            if (from <= to) {
+                intervals.add(new long[]{from, to});
             }
         }
 
-        // Sort intervals by start
+
         intervals.sort(Comparator.comparingLong(a -> a[0]));
 
-        // Merge overlapping intervals
+
         List<long[]> merged = new ArrayList<>();
         for (long[] interval : intervals) {
             if (merged.isEmpty() || merged.get(merged.size() - 1)[1] < interval[0] - 1) {
@@ -105,16 +106,10 @@ public class Day5 {
             }
         }
 
-        // Count total unique numbers
         long total = 0;
         for (long[] interval : merged) {
             total += (interval[1] - interval[0] + 1);
         }
-
-
-
-
-
 
 
         System.out.println(total);
